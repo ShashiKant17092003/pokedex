@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import PokemonCard from "@/components/PokemonCard";
 import PokedexNavbar from "@/components/PokedexNavbar";
 
@@ -66,11 +67,12 @@ export default function Home() {
 
       <Grid container spacing={3} sx={{ p: 3, justifyContent: "center" }}>
         {filteredPokemon.map((p) => (
-          <Grid item key={p.id}>
+          <Box key={p.id}>
             <PokemonCard pokemon={p} />
-          </Grid>
+          </Box>
         ))}
       </Grid>
+
     </>
   );
 }
