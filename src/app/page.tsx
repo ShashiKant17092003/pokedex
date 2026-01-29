@@ -34,7 +34,6 @@ export default function Home() {
     const fetchPokemon = async () => {
       const res = await fetch("/api/pokemon");
       const data = await res.json();
-      console.log(data);
       
       setPokemon(data);
       setLoading(false);

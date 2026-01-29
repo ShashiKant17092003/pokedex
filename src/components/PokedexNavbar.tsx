@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
+// This import must match the file we create in step 2
+import FireBackground from "./FireBackground"; 
 
 type Props = {
   onSearch?: (value: string) => void;
@@ -44,104 +46,109 @@ export default function PokedexNavbar({ onSearch, onTypeChange }: Props) {
   const [type, setType] = useState("");
 
   return (
-    <Box sx={{ mx: "auto", px: 3, pt: 2, minWidth: "fit-content", maxWidth: "50%" }}>
-      <GlobalStyles
-        styles={{
-          "*::-webkit-scrollbar": { width: "6px" },
-          "*::-webkit-scrollbar-track": { background: "#0F1422" },
-          "*::-webkit-scrollbar-thumb": { background: "#273250", borderRadius: "10px" },
-          "*::-webkit-scrollbar-thumb:hover": { background: "#3f4e7a" },
-        }}
-      />
+    <>
+      {/* Dynamic Background logic */}
+      {type === "fire" && <FireBackground />}
 
-      <AppBar
-        position="static"
-        elevation={0}
-        sx={{
-          borderRadius: "999px",
-          border: "1px solid #273250",
-          background: "#0F1422",
-          backdropFilter: "blur(14px)",
-          px: { xs: 1, md: 3 },
-        }}
-      >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography
-            variant="h6"
-            fontWeight={800}
-            sx={{ display: { xs: "none", sm: "block" }, position: "absolute", left: 16 }}
-          >
-            Pokédex
-          </Typography>
+      <Box sx={{ mx: "auto", px: 3, pt: 2, minWidth: "fit-content", maxWidth: "50%", position: "relative", zIndex: 10 }}>
+        <GlobalStyles
+          styles={{
+            "*::-webkit-scrollbar": { width: "6px" },
+            "*::-webkit-scrollbar-track": { background: "#0F1422" },
+            "*::-webkit-scrollbar-thumb": { background: "#273250", borderRadius: "10px" },
+            "*::-webkit-scrollbar-thumb:hover": { background: "#3f4e7a" },
+          }}
+        />
 
-          <Box
-            sx={{
-              display: "flex",
-              gap: 1.5,
-              flexGrow: { xs: 1, sm: 0 },
-              position: "absolute",
-              right: 16,
-            }}
-          >
+        <AppBar
+          position="static"
+          elevation={0}
+          sx={{
+            borderRadius: "999px",
+            border: "1px solid #273250",
+            background: "#0F1422",
+            backdropFilter: "blur(14px)",
+            px: { xs: 1, md: 3 },
+          }}
+        >
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography
+              variant="h6"
+              fontWeight={800}
+              sx={{ display: { xs: "none", sm: "block" }, position: "absolute", left: 16 }}
+            >
+              Pokédex
+            </Typography>
+
             <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
-                gap: 1,
-                px: 2,
-                height: 40,
-                borderRadius: "999px",
-                background: "#141a2e",
-                border: "1px solid #273250",
+                gap: 1.5,
+                flexGrow: { xs: 1, sm: 0 },
+                position: "absolute",
+                right: 16,
               }}
             >
-              <SearchIcon sx={{ color: "rgba(255,255,255,0.4)", fontSize: 20 }} />
-              <InputBase
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  onSearch?.(e.target.value);
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  px: 2,
+                  height: 40,
+                  borderRadius: "999px",
+                  background: "#141a2e",
+                  border: "1px solid #273250",
                 }}
-                sx={{ color: "#fff", fontSize: 14 }}
-              />
-            </Box>
+              >
+                <SearchIcon sx={{ color: "rgba(255,255,255,0.4)", fontSize: 20 }} />
+                <InputBase
+                  placeholder="Search..."
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    onSearch?.(e.target.value);
+                  }}
+                  sx={{ color: "#fff", fontSize: 14 }}
+                />
+              </Box>
 
-            <Select
-              value={type}
-              displayEmpty
-              onChange={(e) => {
-                const value = e.target.value;
-                setType(value);
-                onTypeChange?.(value || undefined);
-              }}
-              sx={{
-                height: 40,
-                minWidth: { xs: 120, sm: 160 },
-                borderRadius: "999px",
-                background: "#141a2e",
-                border: "1px solid #273250",
-                color: "#fff",
-                "& .MuiSelect-icon": { color: "#fff" },
-              }}
-              renderValue={(selected) => {
-                if (!selected) return <span style={{ opacity: 0.5 }}>All Types</span>;
-                const found = POKEMON_TYPES.find((t) => t.type === selected);
-                return `${found?.icon} ${found?.label}`;
-              }}
-            >
-              <MenuItem value="">
-                <em>All Types</em>
-              </MenuItem>
-              {POKEMON_TYPES.map((t) => (
-                <MenuItem key={t.type} value={t.type}>
-                  {t.icon} {t.label}
+              <Select
+                value={type}
+                displayEmpty
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setType(value);
+                  onTypeChange?.(value || undefined);
+                }}
+                sx={{
+                  height: 40,
+                  minWidth: { xs: 120, sm: 160 },
+                  borderRadius: "999px",
+                  background: "#141a2e",
+                  border: "1px solid #273250",
+                  color: "#fff",
+                  "& .MuiSelect-icon": { color: "#fff" },
+                }}
+                renderValue={(selected) => {
+                  if (!selected) return <span style={{ opacity: 0.5 }}>All Types</span>;
+                  const found = POKEMON_TYPES.find((t) => t.type === selected);
+                  return `${found?.icon} ${found?.label}`;
+                }}
+              >
+                <MenuItem value="">
+                  <em>All Types</em>
                 </MenuItem>
-              ))}
-            </Select>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+                {POKEMON_TYPES.map((t) => (
+                  <MenuItem key={t.type} value={t.type}>
+                    {t.icon} {t.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </>
   );
 }
