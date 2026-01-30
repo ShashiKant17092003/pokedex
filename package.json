@@ -19,6 +19,7 @@
     "csv-parser": "^3.2.0",
     "mysql2": "^3.16.2",
     "next": "16.1.5",
+    "next-cloudinary": "^6.17.5",
     "prisma": "^6.19.2",
     "react": "19.2.3",
     "react-dom": "19.2.3"
