@@ -34,7 +34,7 @@ export default function Home() {
     const fetchPokemon = async () => {
       const res = await fetch("/api/pokemon");
       const data = await res.json();
-      
+
       setPokemon(data);
       setLoading(false);
     };
@@ -42,6 +42,7 @@ export default function Home() {
   }, []);
 
   const filteredPokemon = useMemo(() => {
+    // if (!Array.isArray(pokemon)) return [];
     return pokemon.filter((p) => {
       const matchSearch =
         p.name.toLowerCase().includes(search.toLowerCase());
