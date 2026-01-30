@@ -97,6 +97,9 @@ function PokemonDetailModal({ open, onClose, pokemon }: any) {
   }, [open]);
 
   if (!pokemon) return null;
+  const imageName = pokemon.name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-");
 
   return (
     <Dialog
@@ -146,7 +149,7 @@ function PokemonDetailModal({ open, onClose, pokemon }: any) {
               <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", p: 4, pt: 2, background: "rgba(255,255,255,0.02)" }}>
                 <Box sx={{ width: "100%", height: "240px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                   <img 
-                    src={`/images/${pokemon.name}_new.png`} 
+                    src={`/images/${imageName}_new.png`} 
                     style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", filter: "drop-shadow(0 20px 30px rgba(0,0,0,0.5))" }} 
                     alt={pokemon.name}
                     onError={(e) => {
@@ -222,7 +225,7 @@ export default function PokemonCard({ pokemon }: { pokemon: any }) {
       >
         <Box sx={{ width: 90, height: 90, display: "flex", justifyContent: "center", alignItems: "center" }}>
           <CardMedia 
-            component="img" 
+            component="img"
             image={`/images/${imageName}_new.png`} 
             sx={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
             onError={(e) => {
